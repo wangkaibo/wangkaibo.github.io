@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>在崭新的 Centos 系统上编译安装 LNMP 环境完全版 | 语文不及格的人的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前几天买了个 VPS，因为之前接触 Nginx 不是很多，所以折腾 LNMP环境折腾了几个小时，所以我想重新安装一遍并写篇学习笔记，或者说教程，因此本文将从在崭新的 Centos 上搭建 LNMP 环境，为了所有软件都可以选择指定版本和安装配置，因此除了依赖包之外都采用源码包安装的方式来安装。废话不多说，刚刚把 VPS rebulid。注：本文属于新手友好型，能遇到的错误基本上都会遇到。😄
+一、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在崭新的 Centos 系统上编译安装 LNMP 环境完全版">
+<meta property="og:url" content="http://yoursite.com/2016/01/17/LNMP源码安装教程/index.html">
+<meta property="og:site_name" content="语文不及格的人的博客">
+<meta property="og:description" content="前几天买了个 VPS，因为之前接触 Nginx 不是很多，所以折腾 LNMP环境折腾了几个小时，所以我想重新安装一遍并写篇学习笔记，或者说教程，因此本文将从在崭新的 Centos 上搭建 LNMP 环境，为了所有软件都可以选择指定版本和安装配置，因此除了依赖包之外都采用源码包安装的方式来安装。废话不多说，刚刚把 VPS rebulid。注：本文属于新手友好型，能遇到的错误基本上都会遇到。😄
+一、">
+<meta property="og:updated_time" content="2016-01-20T16:43:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在崭新的 Centos 系统上编译安装 LNMP 环境完全版">
+<meta name="twitter:description" content="前几天买了个 VPS，因为之前接触 Nginx 不是很多，所以折腾 LNMP环境折腾了几个小时，所以我想重新安装一遍并写篇学习笔记，或者说教程，因此本文将从在崭新的 Centos 上搭建 LNMP 环境，为了所有软件都可以选择指定版本和安装配置，因此除了依赖包之外都采用源码包安装的方式来安装。废话不多说，刚刚把 VPS rebulid。注：本文属于新手友好型，能遇到的错误基本上都会遇到。😄
+一、">
+  
+    <link rel="alternative" href="/atom.xml" title="语文不及格的人的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xpnci.com1.z0.glb.clouddn.com/5.pic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Kaibo Wang</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">博客君需要更新</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/wangkaibo" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/wangkaibo" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="mailto:wkaiboo@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/LNMP/" style="font-size: 10px;">LNMP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/PHP7/" style="font-size: 10px;">PHP7</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">一名后端工程师，现在居住在北京。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Kaibo Wang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xpnci.com1.z0.glb.clouddn.com/5.pic.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Kaibo Wang</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">博客君需要更新</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/wangkaibo" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/wangkaibo" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="mailto:wkaiboo@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-LNMP源码安装教程" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/17/LNMP源码安装教程/" class="article-date">
+  	<time datetime="2016-01-17T14:33:06.000Z" itemprop="datePublished">2016-01-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在崭新的 Centos 系统上编译安装 LNMP 环境完全版
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LNMP/">LNMP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP7/">PHP7</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前几天买了个 VPS，因为之前接触 Nginx 不是很多，所以折腾 LNMP环境折腾了几个小时，所以我想重新安装一遍并写篇学习笔记，或者说教程，因此本文将从在崭新的 Centos 上搭建 LNMP 环境，为了所有软件都可以选择指定版本和安装配置，因此除了依赖包之外都采用源码包安装的方式来安装。废话不多说，刚刚把 VPS rebulid。<br>注：本文属于新手友好型，能遇到的错误基本上都会遇到。😄</p>
+<h2 id="u4E00_u3001_u5B89_u88C5_Nginx"><a href="#u4E00_u3001_u5B89_u88C5_Nginx" class="headerlink" title="一、安装 Nginx"></a>一、安装 Nginx</h2><p>这里我选择的是1.8.0<br>执行命令下载并解压 Nginx 源码包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://nginx.org/download/nginx-1.8.0.tar.gz&#10;tar -xzvf nginx-1.8.0.tar.gz&#10;cd nginx-1.8.0</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>这里我们./Configure 肯定会报错的，因为我们这是一台崭新的 Centos 系统，缺少好多Nginx依赖包，这里我直接 ./configure 先试一下有什么错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure: error: C compiler cc is not found</span><br></pre></td></tr></table></figure>
+<p>好吧，甚至连 gcc 都没有，先安装 gcc 才能编译源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc</span><br></pre></td></tr></table></figure>
+<p>下面正式编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx/nginx.pid --lock-path=/var/lock/nginx.lock --user=nginx --group=nginx --with-http_ssl_module --with-http_flv_module --with-http_stub_status_module --with-http_gzip_static_module --http-client-body-temp-path=/var/tmp/nginx/client/ --http-proxy-temp-path=/var/tmp/nginx/proxy/ --http-fastcgi-temp-path=/var/tmp/nginx/fcgi/ --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi --http-scgi-temp-path=/var/tmp/nginx/scgi --with-pcre</span><br></pre></td></tr></table></figure>
+<p>又一个错误来了</p>
+<blockquote>
+<p>./configure: error: the HTTP rewrite module requires the PCRE library.<br>You can either disable the module by using –without-http_rewrite_module<br>option, or install the PCRE library into the system, or build the PCRE library<br>statically from the source with nginx by using –with-pcre=<path></path> option.</p>
+</blockquote>
+<p>这个错误我们看提示可以看出，Nginx 需要安装 PCRE Library，类似的错误提示还有很多，下面我们一次性将 Nginx 的依赖包都安装上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#23433;&#35013;PCRE &#24211;&#26159;&#20026;&#20351;&#29992; Nginx &#25903;&#25345; HTTP Rewrite &#27169;&#22359;&#12290;&#10;yum -y install pcre-devel&#10;// zlib&#10;yum -y install zlib-devel&#10;// openssl&#10;yum -y install openssl-devel</span><br></pre></td></tr></table></figure>
+<p>再执行上面的 ./configure 命令，当出现下面提示时，说明我们已经配置好了可以编译了<br>因为我们配置时定义了 user 和 group，下面新建一个nginx 用户和nginx 用户组才能运行nginx服务进程 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">   &#10;# groupadd -r nginx&#10;# useradd -r -g nginx -s /bin/false -M nginx        &#10;# id nginx</span><br></pre></td></tr></table></figure>
+<p>Configuration summary</p>
+<ul>
+<li>using system PCRE library</li>
+<li>using system OpenSSL library</li>
+<li>md5: using OpenSSL library</li>
+<li>sha1: using OpenSSL library</li>
+<li>using system zlib library<br>……</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make&#10;//&#19968;&#33324; make test &#21487;&#30465;&#30053;&#10;make test&#10;make install</span><br></pre></td></tr></table></figure>
+<p>安装成功后我们还需要做一些配置</p>
+<p>1、为Nginx提供sysv风格的服务脚本（ Red Hat Nginx Init Script Should work on RHEL, Fedora, CentOS. Tested on CentOS 5.  Save this file as /etc/init.d/nginx ）</p>
+<p>在新建文件 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/rc.d/init.d/nginx</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh &#10;# &#10;# nginx - this script starts and stops the nginx daemon &#10;# &#10;# chkconfig:   - 85 15  &#10;# description:  Nginx is an HTTP(S) server, HTTP(S) reverse \ &#10;#               proxy and IMAP/POP3 proxy server &#10;# processname: nginx &#10;# config:      /etc/nginx/nginx.conf &#10;# config:      /etc/sysconfig/nginx &#10;# pidfile:     /var/run/nginx.pid &#10;  &#10;# Source function library. &#10;. /etc/rc.d/init.d/functions &#10;  &#10;# Source networking configuration. &#10;. /etc/sysconfig/network &#10;  &#10;# Check that networking is up. &#10;[ &#34;$NETWORKING&#34; = &#34;no&#34; ] &#38;&#38; exit 0 &#10;  &#10;nginx=&#34;/usr/sbin/nginx&#34; &#10;prog=$(basename $nginx) &#10;  &#10;NGINX_CONF_FILE=&#34;/etc/nginx/nginx.conf&#34; &#10;  &#10;[ -f /etc/sysconfig/nginx ] &#38;&#38; . /etc/sysconfig/nginx &#10;  &#10;lockfile=/var/lock/subsys/nginx &#10;  &#10;make_dirs() &#123; &#10;   # make required directories &#10;   user=`nginx -V 2&#62;&#38;1 | grep &#34;configure arguments:&#34; | sed &#39;s/[^*]*--user=\([^ ]*\).*/\1/g&#39; -` &#10;   options=`$nginx -V 2&#62;&#38;1 | grep &#39;configure arguments:&#39;` &#10;   for opt in $options; do &#10;       if [ `echo $opt | grep &#39;.*-temp-path&#39;` ]; then &#10;           value=`echo $opt | cut -d &#34;=&#34; -f 2` &#10;           if [ ! -d &#34;$value&#34; ]; then &#10;               # echo &#34;creating&#34; $value &#10;               mkdir -p $value &#38;&#38; chown -R $user $value &#10;           fi &#10;       fi &#10;   done &#10;&#125; &#10;  &#10;start() &#123; &#10;    [ -x $nginx ] || exit 5 &#10;    [ -f $NGINX_CONF_FILE ] || exit 6 &#10;    make_dirs &#10;    echo -n $&#34;Starting $prog: &#34; &#10;    daemon $nginx -c $NGINX_CONF_FILE &#10;    retval=$? &#10;    echo &#10;    [ $retval -eq 0 ] &#38;&#38; touch $lockfile &#10;    return $retval &#10;&#125; &#10;  &#10;stop() &#123; &#10;    echo -n $&#34;Stopping $prog: &#34; &#10;    killproc $prog -QUIT &#10;    retval=$? &#10;    echo &#10;    [ $retval -eq 0 ] &#38;&#38; rm -f $lockfile &#10;    return $retval &#10;&#125; &#10;  &#10;restart() &#123; &#10;    configtest || return $? &#10;    stop &#10;    sleep 1 &#10;    start &#10;&#125; &#10;  &#10;reload() &#123; &#10;    configtest || return $? &#10;    echo -n $&#34;Reloading $prog: &#34; &#10;    killproc $nginx -HUP &#10;    RETVAL=$? &#10;    echo &#10;&#125; &#10;  &#10;force_reload() &#123; &#10;    restart &#10;&#125; &#10;  &#10;configtest() &#123; &#10;  $nginx -t -c $NGINX_CONF_FILE &#10;&#125; &#10;  &#10;rh_status() &#123; &#10;    status $prog &#10;&#125; &#10;  &#10;rh_status_q() &#123; &#10;    rh_status &#62;/dev/null 2&#62;&#38;1 &#10;&#125; &#10;  &#10;case &#34;$1&#34; in &#10;    start) &#10;        rh_status_q &#38;&#38; exit 0 &#10;        $1 &#10;        ;; &#10;    stop) &#10;        rh_status_q || exit 0 &#10;        $1 &#10;        ;; &#10;    restart|configtest) &#10;        $1 &#10;        ;; &#10;    reload) &#10;        rh_status_q || exit 7 &#10;        $1 &#10;        ;; &#10;    force-reload) &#10;        force_reload &#10;        ;; &#10;    status) &#10;        rh_status &#10;        ;; &#10;    condrestart|try-restart) &#10;        rh_status_q || exit 0 &#10;            ;; &#10;    *) &#10;        echo $&#34;Usage: $0 &#123;start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest&#125;&#34; &#10;        exit 2 &#10;esac</span><br></pre></td></tr></table></figure>
+<p> 给予刚才的文件可执行权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/rc.d/init.d/nginx</span><br></pre></td></tr></table></figure>
+<p>并把他添加到服务列表中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add nginx&#10;chkconfig nginx on&#10;```  &#10;&#21551;&#21160;&#26381;&#21153;&#65292;&#24182;&#26597;&#30475;&#21551;&#21160;&#29366;&#24577;</span><br></pre></td></tr></table></figure>
+<p>/etc/init.d/nginx start<br>netstat -tnlp  | grep nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#29616;&#22312;&#22312;&#21487;&#20197;&#35775;&#38382;&#20102;&#65292;Welcome to nginx!&#10;&#10;&#37325;&#21551;&#26381;&#21153;&#21629;&#20196;</span><br></pre></td></tr></table></figure></p>
+<p>/etc/init.d/nginx restart<br>/etc/init.d/nginx stop<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## &#20108;&#12289;&#23433;&#35013; MySQL&#10;### &#19979;&#36733; MySQL&#10;MySQL &#30340;&#23448;&#26041;[&#19979;&#36733;&#22320;&#22336;](http://dev.mysql.com/downloads/mysql/)&#65292;&#36827;&#21435;&#36873;&#25321; Source Code&#10;&#36825;&#37324;&#25105;&#35013;&#30340;&#26159;5.6.28&#10;&#22914;&#26524;&#20320;&#19981;&#24819;&#20877;&#21435;&#23448;&#32593;&#25214;&#30340;&#35805;&#65292;&#21487;&#20197;&#22312;&#20320;&#30340;&#19979;&#36733;&#30446;&#24405;&#30452;&#25509;&#25191;&#34892;</span><br></pre></td></tr></table></figure></p>
+<p>wget <a href="http://cdn.mysql.com//Downloads/MySQL-5.6/mysql-5.6.28.tar.gz" target="_blank" rel="external">http://cdn.mysql.com//Downloads/MySQL-5.6/mysql-5.6.28.tar.gz</a><br>tar -xzvf mysql-5.6.28.tar.gz<br>cd mysql-5.6.28<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">### &#20934;&#22791;&#24037;&#20316;&#10;&#23433;&#35013;&#21069;&#30340;&#20934;&#22791;&#24037;&#20316;&#65292;MySQL&#38656;&#35201;&#29992;&#21040;&#30340;&#20381;&#36182;&#21253;&#20381;&#27425;&#23433;&#35013;&#19978;</span><br></pre></td></tr></table></figure></p>
+<p>yum -y install gcc-c++<br>yum -y install cmake<br>yum -y install bison-devel<br>yum -y install ncurses-devel</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">### &#32534;&#35793;&#23433;&#35013;&#10;&#10;&#32534;&#35793;&#37197;&#32622;</span><br></pre></td></tr></table></figure>
+<p>cmake \<br>-DCMAKE_INSTALL_PREFIX=/usr/local/mysql \<br>-DMYSQL_DATADIR=/usr/local/mysql/data \<br>-DSYSCONFDIR=/etc \<br>-DWITH_MYISAM_STORAGE_ENGINE=1 \<br>-DWITH_INNOBASE_STORAGE_ENGINE=1 \<br>-DWITH_MEMORY_STORAGE_ENGINE=1 \<br>-DWITH_READLINE=1 \<br>-DMYSQL_UNIX_ADDR=/var/lib/mysql/mysql.sock \<br>-DMYSQL_TCP_PORT=3306 \<br>-DENABLED_LOCAL_INFILE=1 \<br>-DWITH_PARTITION_STORAGE_ENGINE=1 \<br>-DEXTRA_CHARSETS=all \<br>-DDEFAULT_CHARSET=utf8 \<br>-DDEFAULT_COLLATION=utf8_general_ci<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#21442;&#25968;&#35814;&#32454;&#37197;&#32622;&#65292;&#21442;&#32771;MySQL&#23448;&#26041;&#25991;&#26723;&#30340;[MySQL Source-Configuration Options](http://dev.mysql.com/doc/refman/5.5/en/source-configuration-options.html)&#10;&#25105;&#36825;&#37324;&#20986;&#29616;&#20102;&#20197;&#19979;&#35686;&#21578;&#65306;&#10;&#10;&#62; CMake Warning:&#10;  Manually-specified variables were not used by the project:&#10;&#10; &#62;   WITH_MEMORY_STORAGE_ENGINE&#10; &#10; &#62;   WITH_READLINE&#10;&#10;&#10;&#62;-- Build files have been written to: /root/lnmp_source/mysql-5.6.28&#10;&#10;&#25552;&#31034;&#20004;&#20010;&#37197;&#32622;&#39033;&#27809;&#26377;&#24212;&#29992;&#19978;&#65292;&#25105;&#24178;&#33030;&#23601;&#25226;&#36825;&#20004;&#39033;&#37197;&#32622;&#21435;&#25481;&#20102;&#37325;&#26032;./configure &#20102;&#19968;&#19979;&#65292;&#36825;&#27425;&#27809;&#26377;&#35686;&#21578;&#20102;&#10;&#25105;&#26597;&#20102;&#19979;&#36825;&#20004;&#39033;&#30340;&#20316;&#29992;&#65306;&#10;&#10;-WITH_MEMORY_STORAGE_ENGINE #&#25903;&#25345;Memory&#24341;&#25806;&#10;-DWITH_READLINE=1 \ #&#24555;&#25463;&#38190;&#21151;&#33021;&#10;&#22914;&#26524;&#29992;&#21040;&#20877;&#20570;&#37197;&#32622;&#65292;&#19979;&#38754;&#23433;&#35013;&#10;&#10;&#22909;&#20102;&#24320;&#22987;&#32534;&#35793;</span><br></pre></td></tr></table></figure></p>
+<p>make<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL &#32534;&#35793;&#26102;&#38388;&#27604;&#36739;&#38271;...&#25105;&#36825;&#21333;&#26680; VPS...30&#20998;&#38047;&#21518;...</span><br></pre></td></tr></table></figure></p>
+<p> make install<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#21019;&#24314; MySQL &#30340;&#29992;&#25143;&#21644;&#29992;&#25143;&#32452;</span><br></pre></td></tr></table></figure></p>
+<p>groupadd mysql<br>useradd -g mysql mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20462;&#25913;/usr/local/mysql&#26435;&#38480;</span><br></pre></td></tr></table></figure></p>
+<p>chown -R mysql:mysql /usr/local/mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;### &#21021;&#22987;&#21270;&#37197;&#32622;&#10;&#10;&#36827;&#20837;&#23433;&#35013;&#36335;&#24452;&#10;&#10;cd /usr/local/mysql&#10;&#36827;&#20837;&#23433;&#35013;&#36335;&#24452;&#65292;&#25191;&#34892;&#21021;&#22987;&#21270;&#37197;&#32622;&#33050;&#26412;&#65292;&#21019;&#24314;&#31995;&#32479;&#33258;&#24102;&#30340;&#25968;&#25454;&#24211;&#21644;&#34920;</span><br></pre></td></tr></table></figure></p>
+<p>scripts/mysql_install_db –basedir=/usr/local/mysql –datadir=/usr/local/mysql/data –user=mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36825;&#37324;&#25191;&#34892;&#20250;&#25253;&#38169;&#65292;&#22914;&#19979;&#65306;&#10;&#10;&#10;&#62;./scripts/mysql_install_db: /usr/bin/perl: bad interpreter: No such file or directory&#10;&#21407;&#22240;&#26159;&#31995;&#32479;&#27809;&#26377;&#23433;&#35013;Perl &#21644; Perl-devel&#10;&#10;&#35299;&#20915;&#21150;&#27861;&#65292;&#25191;&#34892;&#65306;</span><br></pre></td></tr></table></figure></p>
+<p>yum -y install perl perl-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#23433;&#35013;&#23436;&#25104;&#21518;&#20877;&#25191;&#34892; MySQL &#21021;&#22987;&#21270;&#33050;&#26412;&#23601;&#21487;&#20197;&#20102;&#10;&#29616;&#22312;&#24212;&#35813;&#21487;&#20197;&#24320;&#21551; MySQL &#20102;&#12290;&#10;&#10;&#21516;&#26679;&#23558; MySQL &#25552;&#20379;&#30340;sysv&#39118;&#26684;&#30340;&#26381;&#21153;&#33050;&#26412;&#22797;&#21046;&#21040; /etc/init.d/mysql&#30446;&#24405;</span><br></pre></td></tr></table></figure></p>
+<p>cp support-files/mysql.server /etc/init.d/mysql<br>// 设置开机启动<br>chkconfig mysql on<br>// 启动服务<br>service mysql start  // 启动MySQL<br>// 或者使用<br>/etc/init.d/mysql start // 启动 MySQL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#23558; MySQL &#21152;&#20837;&#29615;&#22659;&#21464;&#37327;&#65292;&#20462;&#25913;/etc/profile&#25991;&#20214;&#65292;&#22312;&#25991;&#20214;&#26411;&#23614;&#28155;&#21152;</span><br></pre></td></tr></table></figure></p>
+<p>PATH=/usr/local/mysql/bin:$PATH<br>export PATH</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20445;&#23384;&#24182;&#20851;&#38381;&#25991;&#20214;&#65292;&#36816;&#34892;&#19979;&#38754;&#30340;&#21629;&#20196;&#35753;&#37197;&#32622;&#29983;&#25928;</span><br></pre></td></tr></table></figure>
+<p>source /etc/profile<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL &#36305;&#36215;&#26469;&#20102;&#65292;&#25105;&#26497;&#20302;&#37197; 512 &#20869;&#23384;&#30340; VPS &#30636;&#38388;&#34987;&#21344;&#29992;&#20102; 400MB &#21834;&#10;&#20462;&#25913; /usr/local/mysql/my.cnf &#20013;&#30340;&#20197;&#19979;&#20960;&#39033;&#37197;&#32622;&#65288;&#27809;&#26377;&#35813;&#39033;&#21487;&#20197;&#28155;&#21152;&#65289;&#65306;</span><br></pre></td></tr></table></figure></p>
+<p>table_definition_cache=400<br>table_open_cache=256<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#28982;&#21518;</span><br></pre></td></tr></table></figure></p>
+<p>/etc/init.d/mysql restart<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#30636;&#38388;&#28165;&#29245;&#20102;&#65292;&#21482;&#33021;&#29306;&#29298;&#24615;&#33021;&#20102;&#128514;&#12290;&#10;&#10;### &#20462;&#25913; MySQL root &#36134;&#25143;&#23494;&#30721;</span><br></pre></td></tr></table></figure></p>
+<p>mysql -uroot<br>mysql&gt; SET PASSWORD = PASSWORD(‘YOUR PASSWORD’);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">### &#20462;&#25913;&#38450;&#28779;&#22681;&#37197;&#32622;&#10;&#10;&#25171;&#24320;/etc/sysconfig/iptables&#10;&#10;&#22312;&#8220;-A INPUT &#8211;m state --state NEW &#8211;m tcp &#8211;p &#8211;dport 22 &#8211;j ACCEPT&#8221;&#65292;&#19979;&#28155;&#21152;&#65306;</span><br></pre></td></tr></table></figure></p>
+<p>-A INPUT -m state –state NEW -m tcp -p -dport 3306 -j ACCEPT<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#28982;&#21518;&#20445;&#23384;&#65292;&#24182;&#20851;&#38381;&#35813;&#25991;&#20214;&#65292;&#22312;&#32456;&#31471;&#20869;&#36816;&#34892;&#19979;&#38754;&#30340;&#21629;&#20196;&#65292;&#21047;&#26032;&#38450;&#28779;&#22681;&#37197;&#32622;&#65306;</span><br></pre></td></tr></table></figure></p>
+<p>service iptables restart<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL &#23433;&#35013;&#23436;&#27605;&#12290;&#10;&#10;## &#23433;&#35013; PHP7&#10;&#10;### &#19979;&#36733; PHP7&#28304;&#30721;&#21253;&#10;&#25105;&#36825;&#37324;&#19979;&#36733;&#30340;&#26159; PHP 7&#65292;&#19979;&#36733;&#21035;&#30340;&#29256;&#26412;&#21435;[php.net](http://php.net/downloads.php)</span><br></pre></td></tr></table></figure></p>
+<p>wget <a href="http://cn2.php.net/distributions/php-7.0.2.tar.gz" target="_blank" rel="external">http://cn2.php.net/distributions/php-7.0.2.tar.gz</a><br>tar -xzvf php-7.0.2.tar.gz<br>cd php-7.0.2</p>
+<h3 id="u7F16_u8BD1_u914D_u7F6E"><a href="#u7F16_u8BD1_u914D_u7F6E" class="headerlink" title="编译配置"></a>编译配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#22914;&#26524;&#25105;&#20204;&#30452;&#25509;&#37197;&#32622;&#30340;&#35805;&#24212;&#35813;&#20250;&#25253;&#38169;&#65292;&#25105;&#20204;&#36824;&#38656;&#35201;&#23433;&#35013;&#19968;&#20123; PHP &#30340;&#20381;&#36182;&#21253;&#65292;&#32534;&#35793;&#37197;&#32622;&#19968;&#19979;&#35797;&#35797;</span><br></pre></td></tr></table></figure>
+<p>./configure –enable-fpm –with-mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#39318;&#20808;&#25253;&#20197;&#19979;&#38169;&#35823;&#65306;&#10;&#10;&#62;configure: error: xml2-config not found. Please check your libxml2 installation.&#10;&#10;&#32570;&#23569; libxml2&#65292;&#30452;&#25509;&#20351;&#29992; yum &#26041;&#24335;&#23433;&#35013; libxml2</span><br></pre></td></tr></table></figure></p>
+<p>yum install -y libxml2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#19979;&#38754;&#19968;&#21475;&#27668;&#25226;&#25152;&#26377;&#30340;PHP &#29992;&#21040;&#30340;&#36719;&#20214;&#21253;&#37117;&#23433;&#35013;&#19978;</span><br></pre></td></tr></table></figure>
+<p>yum install -y libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers php-mysqlnd libmcrypt-devel libtidy libtidy-devel recode recode-devel libxpm-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#23433;&#35013;&#23436;&#20043;&#21518;&#21487;&#20197;&#32534;&#35793;&#37197;&#32622;&#20102;</span><br></pre></td></tr></table></figure></p>
+<p>./configure –prefix=/usr/local/php7 –with-config-file-path=/etc/php7 –with-mysql=mysqlnd –with-pdo-mysql=mysqlnd –with-mysqli=mysqlnd –with-gd –with-iconv –with-zlib –enable-xml –enable-bcmath –enable-shmop –enable-sysvsem –enable-inline-optimization –enable-mbregex –enable-fpm –enable-mbstring –enable-ftp –enable-gd-native-ttf –with-openssl –enable-pcntl –enable-sockets –with-xmlrpc –enable-zip –enable-soap –without-pear –with-gettext –enable-session –with-mcrypt –with-curl –with-jpeg-dir –with-freetype-dir –with-xpm-dir=/usr –with-bz2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#27880;&#24847;&#21069;&#20004;&#20010;&#37197;&#32622;</span><br></pre></td></tr></table></figure>
+<p>–prefix=/usr/local/php7 //安装位置<br>–with-config-file-path=/etc/php7 //配置文件位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#22914;&#26524;&#36824;&#20250;&#25253;&#38169;&#65292;&#21487;&#33021;&#26159;&#32570;&#23569;&#20381;&#36182;&#21253;&#65292;&#25353;&#29031;&#25552;&#31034;&#23433;&#35013;&#23601;&#21487;&#20197;&#20102;&#12290;&#10;&#10;&#62;configure: error: xpm.h not found.&#10;&#10;&#19978;&#38754;&#24536;&#20102;&#23433;&#35013; libxpm &#21644; mcrypt &#25193;&#23637;&#10;&#23433;&#35013; libXpm</span><br></pre></td></tr></table></figure></p>
+<p>yum install libXpm-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#22909;&#22810; yum &#28304;&#20013;&#27809;&#26377; mcrypt&#65292;&#25285;&#24515;&#31532;&#19977;&#26041;&#28304;&#19981;&#21487;&#38752;&#65292;&#25105;&#36873;&#25321;&#20351;&#29992;&#28304;&#30721;&#23433;&#35013; mcrypt&#65292;&#20999;&#25442;&#21040;&#21478;&#19968;&#20010;&#30446;&#24405;</span><br></pre></td></tr></table></figure></p>
+<p>wget ftp://mcrypt.hellug.gr/pub/crypto/mcrypt/libmcrypt/libmcrypt-2.5.6.tar.gz<br>tar -zxvf libmcrypt-2.5.6.tar.gz<br>cd libmcrypt-2.5.6.tar.gz<br>make &amp;&amp; make install<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20877;&#37197;&#32622;&#65292;&#32534;&#35793;&#23433;&#35013;</span><br></pre></td></tr></table></figure></p>
+<p>make<br>sudo make install</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#36825;&#37324;&#21015;&#20986; PHP &#32534;&#35793;&#37197;&#32622;&#24120;&#35265;&#38169;&#35823;&#21644;&#35299;&#20915;&#21150;&#27861;&#65306;&#10;&#62;configure: error: xslt-config not found. Please reinstall the libxslt &#62;= 1.1.0 distribution&#10;&#62;</span><br></pre></td></tr></table></figure>
+<p>yum install libxslt-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: Could not find net-snmp-config binary. Please check your net-snmp installation.&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install net-snmp-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: Please reinstall readline - I cannot find readline.h&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install readline-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: Cannot find pspell&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install aspell-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;checking for unixODBC support... configure: error: ODBC header file &#39;/usr/include/sqlext.h&#39; not found!&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install unixODBC-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: Unable to detect ICU prefix or /usr/bin/icu-config failed. Please verify ICU install prefix and make sure icu-config works.&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install libicu-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: utf8mime2text() has new signature, but U8TCANONICAL is missing. This should not happen. Check config.log for additional information.&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install libc-client-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: freetype.h not found.&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install freetype-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: xpm.h not found.&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install libXpm-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: png.h not found.&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install libpng-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: vpx_codec.h not found.&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install libvpx-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: Cannot find enchant&#10;&#62;</span><br></pre></td></tr></table></figure></p>
+<p>yum install enchant-devel<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#62;configure: error: Please reinstall the libcurl distribution - easy.h should be in /include/curl/&#10;&#10;### &#37197;&#32622; Nginx &#10;&#10;nginx&#26412;&#36523;&#19981;&#33021;&#22788;&#29702;PHP&#65292;&#23427;&#21482;&#26159;&#20010;web&#26381;&#21153;&#22120;&#65292;&#24403;&#25509;&#25910;&#21040;&#35831;&#27714;&#21518;&#65292;&#22914;&#26524;&#26159;php&#35831;&#27714;&#65292;&#21017;&#21457;&#32473;php&#35299;&#37322;&#22120;&#22788;&#29702;&#65292;&#24182;&#25226;&#32467;&#26524;&#36820;&#22238;&#32473;&#23458;&#25143;&#31471;&#12290;&#10;&#10;nginx&#19968;&#33324;&#26159;&#25226;&#35831;&#27714;&#21457;fastcgi&#31649;&#29702;&#36827;&#31243;&#22788;&#29702;&#65292;fascgi&#31649;&#29702;&#36827;&#31243;&#36873;&#25321;cgi&#23376;&#36827;&#31243;&#22788;&#29702;&#32467;&#26524;&#24182;&#36820;&#22238;&#34987;nginx&#10;&#10;&#39318;&#20808;&#20462;&#25913; Nginx &#30340;&#37197;&#32622;&#65292;&#21018;&#25165;&#23433;&#35013;&#26102;&#37197;&#32622;&#30340;&#37197;&#32622;&#25991;&#20214;&#30446;&#24405;&#26159; /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure></p>
+<p>vi /etc/nginx/nginx.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;</span><br></pre></td></tr></table></figure></p>
+<h1 id="pass_the_PHP_scripts_to_FastCGI_server_listening_on_127-0-0-1_3A9000"><a href="#pass_the_PHP_scripts_to_FastCGI_server_listening_on_127-0-0-1_3A9000" class="headerlink" title="pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000"></a>pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</h1><p>#<br>location ~ .php$ {<br>    root /var/www; //根目录 root<br>    fastcgi_pass 127.0.0.1:9000;<br>    fastcgi_index index.php;<br>    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;<br>    include fastcgi_params;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#36825;&#37324;&#38656;&#35201;&#27880;&#24847; location ~.php &#30340;&#37197;&#32622;&#22359;&#30340; root &#26681;&#30446;&#24405;&#19968;&#23450;&#35201;&#36319; server &#22359;&#30340;&#37197;&#32622;&#19968;&#26679;&#65292;&#21542;&#21017; php &#25991;&#20214;&#20250;&#19981;&#33021;&#35299;&#26512;&#65292;&#20250;&#25253; File not found &#38169;&#35823;&#12290;&#10;&#10;&#21516;&#26102;&#20063;&#24314;&#35758;&#22312;location / &#37197;&#32622;&#19979;&#30340; index &#21152;&#19978; index.php&#10;&#10;&#37197;&#32622;&#22909; Nginx &#21487;&#20197;&#20808;&#23581;&#35797;&#21551;&#21160; php-fpm</span><br></pre></td></tr></table></figure></p>
+<p>/usr/local/php7/sbin/php-fpm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#21999;&#65292;&#26159;&#30340;&#65292;&#24212;&#35813;&#20250;&#25253;&#19979;&#38754;&#30340;&#38169;&#35823;&#128516;&#10;&#10;&#62;ERROR: failed to open configuration file &#39;/local/php7/etc/php-fpm.conf&#39;: No such file or directory (2)&#10;[20-Jan-2016 10:56:50] ERROR: failed to load configuration file &#39;/local/php7/etc/php-fpm.conf&#39;&#10;&#10;&#23558;&#40664;&#35748;&#30340;&#37197;&#32622;&#25991;&#20214; cp &#20026;&#27491;&#25151;</span><br></pre></td></tr></table></figure></p>
+<p>cp /local/php7/etc/php-fpm.conf.default /local/php7/etc/php-fpm.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#22914;&#26524;&#36825;&#26102;&#20505;&#21551;&#21160; php-fpm &#20250;&#25253;&#19979;&#38754;&#30340;&#38169;&#35823;&#10;&#10;&#62;WARNING: Nothing matches the include pattern &#39;/local/php7/etc/php-fpm.d/*.conf&#39; from /local/php7/etc/php-fpm.conf at line 125.&#10;[20-Jan-2016 11:03:40] ERROR: No pool defined. at least one pool section must be specified in config file&#10;&#10;&#26681;&#25454;&#38169;&#35823;&#25552;&#31034;&#20449;&#24687;&#65292;&#36824;&#26159;&#21021;&#22987;&#21270;&#37197;&#32622;&#25991;&#20214;</span><br></pre></td></tr></table></figure></p>
+<p>cp /local/php7/etc/php-fpm.d/www.conf.default /local/php7/etc/php-fpm.d/www.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#36825;&#26102;&#20505;&#24212;&#35813;&#21487;&#20197;&#21551;&#21160;&#20102;&#12290;&#10;&#19979;&#38754;&#27979;&#35797;&#19968;&#19979;</span><br></pre></td></tr></table></figure></p>
+<p>cd /var/www<br>echo “&lt;?php phpinfo();” &gt; index.php<br>```<br>到此为止，整个安装过程就写完了.</p>
+<p>零零散散地看了网上很多的教程，所以决定总（fu）结（zhi）一（yi）下（fen），描述比较傻瓜化，安装过程中基本所有的错误就提到了。希望能对刚踏入 Linux 服务端的同学有所帮助。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://xyuex.blog.51cto.com/5131937/1013414" target="_blank" rel="external">Nginx 源码编译安装</a></li>
+<li><a href="http://www.cnblogs.com/xiongpq/p/3384681.html" target="_blank" rel="external">CentOS 6.4下编译安装MySQL 5.6.14</a></li>
+<li><a href="http://blog.wuxu92.com/compile-and-install-php7-beta1/" target="_blank" rel="external">编译安装PHP7 beta1</a></li>
+<li><a href="https://coderwall.com/p/ggmpfa/php-configuration-error-and-solutions-in-rpm" target="_blank" rel="external">PHP configuration error and Solutions in RPM</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/17/Hello-Hexo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Hello-Hexo
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="LNMP源码安装教程" data-title="在崭新的 Centos 系统上编译安装 LNMP 环境完全版" data-url="http://yoursite.com/2016/01/17/LNMP源码安装教程/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Kaibo Wang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
