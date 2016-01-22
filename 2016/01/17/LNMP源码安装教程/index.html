@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="语文不及格的人的博客">
 <meta property="og:description" content="前几天买了个 VPS，因为之前接触 Nginx 不是很多，所以折腾 LNMP环境折腾了几个小时，所以我想重新安装一遍并写篇学习笔记，或者说教程，因此本文将从在崭新的 Centos 上搭建 LNMP 环境，为了所有软件都可以选择指定版本和安装配置，因此除了依赖包之外都采用源码包安装的方式来安装。废话不多说，刚刚把 VPS rebulid。注：本文属于新手友好型，能遇到的错误基本上都会遇到。😄
 一、">
-<meta property="og:updated_time" content="2016-01-20T17:03:57.000Z">
+<meta property="og:updated_time" content="2016-01-22T13:11:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在崭新的 Centos 系统上编译安装 LNMP 环境完全版">
 <meta name="twitter:description" content="前几天买了个 VPS，因为之前接触 Nginx 不是很多，所以折腾 LNMP环境折腾了几个小时，所以我想重新安装一遍并写篇学习笔记，或者说教程，因此本文将从在崭新的 Centos 上搭建 LNMP 环境，为了所有软件都可以选择指定版本和安装配置，因此除了依赖包之外都采用源码包安装的方式来安装。废话不多说，刚刚把 VPS rebulid。注：本文属于新手友好型，能遇到的错误基本上都会遇到。😄
@@ -217,7 +217,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://nginx.org/download/nginx-1.8.0.tar.gz&#10;tar -xzvf nginx-1.8.0.tar.gz&#10;cd nginx-1.8.0</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>这里我们./Configure 肯定会报错的，因为我们这是一台崭新的 Centos 系统，缺少好多Nginx依赖包，这里我直接 ./configure 先试一下有什么错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure: error: C compiler cc is not found</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>./configure: error: C compiler cc is not found</p>
+</blockquote>
 <p>好吧，甚至连 gcc 都没有，先安装 gcc 才能编译源码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc</span><br></pre></td></tr></table></figure>
 <p>下面正式编译</p>
