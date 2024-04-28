@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MySQL on Pavel - Some words</title>
+    <link>http://localhost:1313/tags/mysql/</link>
+    <description>Recent content in MySQL on Pavel - Some words</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 08 Dec 2016 22:23:15 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MySQL 分区遇到的小问题</title>
+      <link>http://localhost:1313/mysql-fen-qu-yu-dao-de-xiao-wen-ti/</link>
+      <pubDate>Thu, 08 Dec 2016 22:23:15 +0800</pubDate>
+      <guid>http://localhost:1313/mysql-fen-qu-yu-dao-de-xiao-wen-ti/</guid>
+      <description>&lt;p&gt;近期公司有个业务数据量已经很大了，我们考虑对数据库进行分区。本文做个小纪录&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MySQL 主从分离配置的一些坑</title>
+      <link>http://localhost:1313/mysql-zhu-cong-fen-chi-pei-zhi-de-yi-xie-keng/</link>
+      <pubDate>Wed, 18 Nov 2015 21:01:47 +0800</pubDate>
+      <guid>http://localhost:1313/mysql-zhu-cong-fen-chi-pei-zhi-de-yi-xie-keng/</guid>
+      <description>&lt;p&gt;最近在多个虚拟机上做主从分离的实验，遇到的小问题，记录一下。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

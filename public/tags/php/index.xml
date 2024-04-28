@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on Pavel - Some words</title>
+    <link>http://localhost:1313/tags/php/</link>
+    <description>Recent content in Php on Pavel - Some words</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 05 May 2017 23:50:45 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PHP session 获取不到之前设置值的问题</title>
+      <link>http://localhost:1313/php-session-%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0/</link>
+      <pubDate>Fri, 05 May 2017 23:50:45 +0800</pubDate>
+      <guid>http://localhost:1313/php-session-%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0/</guid>
+      <description>&lt;h3 id=&#34;php-session-获取不到之前设置值的问题&#34;&gt;PHP session 获取不到之前设置值的问题&lt;/h3&gt;&#xA;&lt;p&gt;今天帮朋友的服务器部署一个小程序商城时遇到一个 session 无法保存的问题。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

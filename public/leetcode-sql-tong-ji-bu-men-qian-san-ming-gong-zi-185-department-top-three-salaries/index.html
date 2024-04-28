@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>【LeetCode】SQL 统计部门前三名工资185. Department Top Three Salaries - Pavel - Some words</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="" /><meta name="description" content="问题描述 员工表包含所有员工。每个员工都有一个ID，并且还有一列表示部门ID。
+部门表包括公司所有的部门。
+写一条 SQL 查询出每个部门薪酬排名前三的的员工。对于上述表，你的 SQL 应该返回下面几列。
+LeetCode链接：Department Top Three Salaries
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.125.4 with theme even" />
+
+
+<link rel="canonical" href="http://localhost:1313/leetcode-sql-tong-ji-bu-men-qian-san-ming-gong-zi-185-department-top-three-salaries/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:url" content="http://localhost:1313/leetcode-sql-tong-ji-bu-men-qian-san-ming-gong-zi-185-department-top-three-salaries/">
+  <meta property="og:site_name" content="Pavel - Some words">
+  <meta property="og:title" content="【LeetCode】SQL 统计部门前三名工资185. Department Top Three Salaries">
+  <meta property="og:description" content="问题描述 员工表包含所有员工。每个员工都有一个ID，并且还有一列表示部门ID。
+部门表包括公司所有的部门。
+写一条 SQL 查询出每个部门薪酬排名前三的的员工。对于上述表，你的 SQL 应该返回下面几列。
+LeetCode链接：Department Top Three Salaries">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2015-12-12T00:29:22+08:00">
+    <meta property="article:modified_time" content="2015-12-12T00:29:22+08:00">
+    <meta property="article:tag" content="LeetCode">
+
+  <meta itemprop="name" content="【LeetCode】SQL 统计部门前三名工资185. Department Top Three Salaries">
+  <meta itemprop="description" content="问题描述
+员工表包含所有员工。每个员工都有一个ID，并且还有一列表示部门ID。
+部门表包括公司所有的部门。
+写一条 SQL 查询出每个部门薪酬排名前三的的员工。对于上述表，你的 SQL 应该返回下面几列。
+LeetCode链接：Department Top Three Salaries">
+  <meta itemprop="datePublished" content="2015-12-12T00:29:22+08:00">
+  <meta itemprop="dateModified" content="2015-12-12T00:29:22+08:00">
+  <meta itemprop="wordCount" content="324">
+  <meta itemprop="keywords" content="LeetCode"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="【LeetCode】SQL 统计部门前三名工资185. Department Top Three Salaries">
+<meta name="twitter:description" content="问题描述
+员工表包含所有员工。每个员工都有一个ID，并且还有一列表示部门ID。
+部门表包括公司所有的部门。
+写一条 SQL 查询出每个部门薪酬排名前三的的员工。对于上述表，你的 SQL 应该返回下面几列。
+LeetCode链接：Department Top Three Salaries">
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">【LeetCode】SQL 统计部门前三名工资185. Department Top Three Salaries</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-12-12 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#问题描述">问题描述</a></li>
+            <li><a href="#解决方案">解决方案</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="问题描述">问题描述</h3>
+<p>员工表包含所有员工。每个员工都有一个ID，并且还有一列表示部门ID。</p>
+<p>部门表包括公司所有的部门。</p>
+<p>写一条 SQL 查询出每个部门薪酬排名前三的的员工。对于上述表，你的 SQL 应该返回下面几列。</p>
+<p>LeetCode链接：<a href="https://leetcode.com/problems/department-top-three-salaries/">Department Top Three Salaries</a></p>
+<h4 id="员工表">员工表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">+----+-------+--------+--------------+
+</span></span><span class="line"><span class="cl">| Id | Name  | Salary | DepartmentId |
+</span></span><span class="line"><span class="cl">+----+-------+--------+--------------+
+</span></span><span class="line"><span class="cl">| 1  | Joe   | 70000  | 1            |
+</span></span><span class="line"><span class="cl">| 2  | Henry | 80000  | 2            |
+</span></span><span class="line"><span class="cl">| 3  | Sam   | 60000  | 2            |
+</span></span><span class="line"><span class="cl">| 4  | Max   | 90000  | 1            |
+</span></span><span class="line"><span class="cl">| 5  | Janet | 69000  | 1            |
+</span></span><span class="line"><span class="cl">| 6  | Randy | 85000  | 1            |
+</span></span><span class="line"><span class="cl">+----+-------+--------+--------------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="部门表">部门表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">+----+----------+
+</span></span><span class="line"><span class="cl">| Id | Name     |
+</span></span><span class="line"><span class="cl">+----+----------+
+</span></span><span class="line"><span class="cl">| 1  | IT       |
+</span></span><span class="line"><span class="cl">| 2  | Sales    |
+</span></span><span class="line"><span class="cl">+----+----------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="关系表">关系表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">+------------+----------+--------+
+</span></span><span class="line"><span class="cl">| Department | Employee | Salary |
+</span></span><span class="line"><span class="cl">+------------+----------+--------+
+</span></span><span class="line"><span class="cl">| IT         | Max      | 90000  |
+</span></span><span class="line"><span class="cl">| IT         | Randy    | 85000  |
+</span></span><span class="line"><span class="cl">| IT         | Joe      | 70000  |
+</span></span><span class="line"><span class="cl">| Sales      | Henry    | 80000  |
+</span></span><span class="line"><span class="cl">| Sales      | Sam      | 60000  |
+</span></span><span class="line"><span class="cl">+------------+----------+--------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="解决方案">解决方案</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">d</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="n">Department</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="n">Employee</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Salary</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">from</span><span class="w"> </span><span class="n">Employee</span><span class="w"> </span><span class="n">e</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">join</span><span class="w"> </span><span class="n">Department</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">Id</span><span class="o">=</span><span class="n">e</span><span class="p">.</span><span class="n">DepartmentId</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="k">distinct</span><span class="w"> </span><span class="n">Salary</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">Employee</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">Salary</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Salary</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">DepartmentId</span><span class="o">=</span><span class="n">d</span><span class="p">.</span><span class="n">id</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Salary</span><span class="w"> </span><span class="k">desc</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content"></span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2015-12-12
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/leetcode/">LeetCode</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/53-maximum-subarray/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">【LeetCode】最大子列和问题（53 Maximum Subarray）</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/mysql-zhu-cong-fen-chi-pei-zhi-de-yi-xie-keng/">
+            <span class="next-text nav-default">MySQL 主从分离配置的一些坑</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://localhost:1313/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

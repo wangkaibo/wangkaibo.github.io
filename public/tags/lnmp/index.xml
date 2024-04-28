@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LNMP on Pavel - Some words</title>
+    <link>http://localhost:1313/tags/lnmp/</link>
+    <description>Recent content in LNMP on Pavel - Some words</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 08 Oct 2017 22:59:46 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/lnmp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>日常折腾环境😂Nginx &#43; PHP 7.1.3</title>
+      <link>http://localhost:1313/centos-6-8-install-nginx-stable-and-php7/</link>
+      <pubDate>Sun, 08 Oct 2017 22:59:46 +0800</pubDate>
+      <guid>http://localhost:1313/centos-6-8-install-nginx-stable-and-php7/</guid>
+      <description>&lt;p&gt;今天看 PHP 官网 7.1.3 的稳定版已经出来了，准备尝尝鲜，安装过程没有什么变化，这里只是简单记录下。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Centos上从零开始编译安装LNMP环境</title>
+      <link>http://localhost:1313/new-centos-compiled-install-lnmp-environment/</link>
+      <pubDate>Tue, 15 Sep 2015 23:32:45 +0800</pubDate>
+      <guid>http://localhost:1313/new-centos-compiled-install-lnmp-environment/</guid>
+      <description>&lt;p&gt;前几天买了个 VPS，因为之前接触 Nginx 不是很多，所以折腾 LNMP环境折腾了几个小时，所以我想重新安装一遍并写篇学习笔记，或者说教程，因此本文将从在崭新的 Centos 上搭建 LNMP 环境，为了所有软件都可以选择指定版本和安装配置，因此除了依赖包之外都采用源码包安装的方式来安装。废话不多说，刚刚把 VPS rebulid。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

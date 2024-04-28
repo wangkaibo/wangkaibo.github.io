@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>让你的Ghost博客支持Progressive Web Apps (PWA) - Pavel - Some words</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="" /><meta name="description" content="Ghost 博客支持 Progressive Web Apps （PWA） 一直对 Google 的 Progressive Web Apps （以下简称 PWA） 有点兴趣，所以拿我的博客做实验，让 Ghost 博客支持 PWA。
+PS：如果你的博客还不支持 https 的话，那么也就不支持 Service Worker，也就是说实现不了 Progressive Web Apps。
+" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.125.4 with theme even" />
+
+
+<link rel="canonical" href="http://localhost:1313/node-express-ghost-progressive-web-apps-pwa/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:url" content="http://localhost:1313/node-express-ghost-progressive-web-apps-pwa/">
+  <meta property="og:site_name" content="Pavel - Some words">
+  <meta property="og:title" content="让你的Ghost博客支持Progressive Web Apps (PWA)">
+  <meta property="og:description" content="Ghost 博客支持 Progressive Web Apps （PWA） 一直对 Google 的 Progressive Web Apps （以下简称 PWA） 有点兴趣，所以拿我的博客做实验，让 Ghost 博客支持 PWA。
+PS：如果你的博客还不支持 https 的话，那么也就不支持 Service Worker，也就是说实现不了 Progressive Web Apps。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2017-09-30T01:13:02+08:00">
+    <meta property="article:modified_time" content="2017-09-30T01:13:02+08:00">
+    <meta property="article:tag" content="PWA">
+
+  <meta itemprop="name" content="让你的Ghost博客支持Progressive Web Apps (PWA)">
+  <meta itemprop="description" content="Ghost 博客支持 Progressive Web Apps （PWA）
+一直对 Google 的 Progressive Web Apps （以下简称 PWA） 有点兴趣，所以拿我的博客做实验，让 Ghost 博客支持 PWA。
+PS：如果你的博客还不支持 https 的话，那么也就不支持 Service Worker，也就是说实现不了 Progressive Web Apps。">
+  <meta itemprop="datePublished" content="2017-09-30T01:13:02+08:00">
+  <meta itemprop="dateModified" content="2017-09-30T01:13:02+08:00">
+  <meta itemprop="wordCount" content="1566">
+  <meta itemprop="keywords" content="PWA"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="让你的Ghost博客支持Progressive Web Apps (PWA)">
+<meta name="twitter:description" content="Ghost 博客支持 Progressive Web Apps （PWA）
+一直对 Google 的 Progressive Web Apps （以下简称 PWA） 有点兴趣，所以拿我的博客做实验，让 Ghost 博客支持 PWA。
+PS：如果你的博客还不支持 https 的话，那么也就不支持 Service Worker，也就是说实现不了 Progressive Web Apps。">
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Even</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Even</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">让你的Ghost博客支持Progressive Web Apps (PWA)</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2017-09-30 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#ghost-博客支持-progressive-web-apps-pwa">Ghost 博客支持 Progressive Web Apps （PWA）</a></li>
+            <li><a href="#添加-service-worker-toolbox">添加 Service Worker Toolbox</a></li>
+            <li><a href="#激活-service-worker">激活 Service Worker</a></li>
+            <li><a href="#添加到主屏幕">添加到主屏幕</a></li>
+            <li><a href="#参考资料">参考资料</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h3 id="ghost-博客支持-progressive-web-apps-pwa">Ghost 博客支持 Progressive Web Apps （PWA）</h3>
+<p>一直对 Google 的 Progressive Web Apps （以下简称 PWA） 有点兴趣，所以拿我的博客做实验，让 Ghost 博客支持 PWA。</p>
+<p>PS：如果你的博客还不支持 https 的话，那么也就不支持 Service Worker，也就是说实现不了 Progressive Web Apps。</p>
+<p>如果对 PWA 不是很了解，建议先阅读：</p>
+<ul>
+<li>你的首个Progressive Web App <a href="https://codelabs.developers.google.com/codelabs/your-first-pwapp/#0">[English]</a>
+<a href="https://developers.google.cn/web/fundamentals/getting-started/codelabs/your-first-pwapp/?hl=zh-cn">[中文]</a></li>
+<li><a href="https://huangxuan.me/2017/02/09/nextgen-web-pwa/">下一代 Web 应用模型 —— Progressive Web App</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">Service worker 概念和用法</a></li>
+<li><a href="https://github.com/GoogleChrome/sw-toolbox">Service Worker Tools</a></li>
+</ul>
+<h3 id="添加-service-worker-toolbox">添加 Service Worker Toolbox</h3>
+<p>在主题目录下（默认为 ghost/content/themes/casper）的 <code>assets</code> 新建 <code>dist</code> 目录。</p>
+<p>在该目录添加 <code>sw-toolbox.js</code> 文件，文件内容在<a href="https://raw.githubusercontent.com/GoogleChrome/sw-toolbox/master/sw-toolbox.js">这里</a></p>
+<p>###添加缓存脚本</p>
+<p>在您的主题根目录下创建名为serviceworker-v1.js的文件，这里需要注意 <code>serviceworker-v1.js</code> 这个文件一定要放到网站根目录，因为它的位置也指定了 Service Worker 可执行的目录权限。</p>
+<p>在该文件中包含以下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">    * Service Worker Toolbox caching
+</span></span></span><span class="line"><span class="cl"><span class="cm">    */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">cacheVersion</span> <span class="o">=</span> <span class="s1">&#39;-toolbox-v1&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">dynamicVendorCacheName</span> <span class="o">=</span> <span class="s1">&#39;dynamic-vendor&#39;</span> <span class="o">+</span> <span class="nx">cacheVersion</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">staticVendorCacheName</span> <span class="o">=</span> <span class="s1">&#39;static-vendor&#39;</span> <span class="o">+</span> <span class="nx">cacheVersion</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">staticAssetsCacheName</span> <span class="o">=</span> <span class="s1">&#39;static-assets&#39;</span> <span class="o">+</span> <span class="nx">cacheVersion</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">contentCacheName</span> <span class="o">=</span> <span class="s1">&#39;content&#39;</span> <span class="o">+</span> <span class="nx">cacheVersion</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">maxEntries</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">self</span><span class="p">.</span><span class="nx">importScripts</span><span class="p">(</span><span class="s1">&#39;assets/dist/sw-toolbox.js&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">debug</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Cache own static assets
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/assets/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">cacheFirst</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">name</span><span class="o">:</span> <span class="nx">staticAssetsCacheName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">maxEntries</span><span class="o">:</span> <span class="nx">maxEntries</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// cache dynamic vendor assets, things which have no other update mechanism like filename change/version hash
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/css&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">fastest</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">origin</span><span class="o">:</span> <span class="sr">/fonts\.googleapis\.com/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">              <span class="nx">name</span><span class="o">:</span> <span class="nx">dynamicVendorCacheName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="nx">maxEntries</span><span class="o">:</span> <span class="nx">maxEntries</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Do not cache disqus
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">networkOnly</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">origin</span><span class="o">:</span> <span class="sr">/disqus\.com/</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">networkOnly</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">origin</span><span class="o">:</span> <span class="sr">/disquscdn\.com/</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Cache all static vendor assets, e.g. fonts whose version is bind to the according url
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">cacheFirst</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">origin</span><span class="o">:</span> <span class="sr">/(fonts\.gstatic\.com|www\.google-analytics\.com)/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">name</span><span class="o">:</span> <span class="nx">staticVendorCacheName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">maxEntries</span><span class="o">:</span> <span class="nx">maxEntries</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/content/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">fastest</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">name</span><span class="o">:</span> <span class="nx">contentCacheName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">maxEntries</span><span class="o">:</span> <span class="nx">maxEntries</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/*&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/(\/ghost\/|\/page\/)/</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">request</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;accept&#39;</span><span class="p">).</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;text/html&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">fastest</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">networkOnly</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">name</span><span class="o">:</span> <span class="nx">contentCacheName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">maxEntries</span><span class="o">:</span> <span class="nx">maxEntries</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// immediately activate this serviceworker
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;install&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">skipWaiting</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">self</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;activate&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">event</span><span class="p">.</span><span class="nx">waitUntil</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">clients</span><span class="p">.</span><span class="nx">claim</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">})();</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//# sourceMappingURL=serviceworker-v1.js.map
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果在部署阶段，可以将上段代码中的 <code>self.toolbox.options.debug</code> 改为 <code>true</code>。</p>
+<p>从下面这段代码可以看出 <code>service worker</code> 使用 Express 路由的代码风格来定位指定的资源：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">    <span class="c1">// 缓存静态资源
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/assets/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">cacheFirst</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">name</span><span class="o">:</span> <span class="nx">staticAssetsCacheName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">maxEntries</span><span class="o">:</span> <span class="nx">maxEntries</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有以下几种获取资源的方式：</p>
+<ul>
+<li>cacheFirst（缓存优先）： 如果请求与缓存条目匹配，则回应。 否则尝试从网络中获取资源。 如果网络请求成功，请更新缓存。 此选项适用于不更改的资源，或具有其他更新机制。</li>
+<li>cacheFirst（最快）：从缓存和网络并行请求资源。以首先回报的方式作出回应。通常这将是缓存的版本，如果有的话。一方面，即使资源被缓存，这个策略总是会产生一个网络请求。另一方面，如果/当网络请求完成时，缓存被更新，以便将来的高速缓存读取将是更新的。</li>
+<li>networkFirst（网络优先）：尝试通过从网络中提取来处理请求。如果成功，将响应存储在缓存中。 否则，尝试从缓存中完成请求。这是用于基本的直读缓存的策略。它也适用于API请求，当您始终希望最新数据可用时，而不是没有数据的陈旧数据。</li>
+<li>cacheOnly：只使用缓存资源</li>
+<li>networkOnly：只使用网络资源</li>
+</ul>
+<p>如果我们不想缓存评论内容，我这里使用的是网易云跟帖，可以指定来自 163.com 和 netease.com 的文件的请求始终为网络：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl">   <span class="c1">// Do not cache 163.com and netease.com
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">networkOnly</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">origin</span><span class="o">:</span> <span class="sr">/163\.com/</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/(.*)&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">toolbox</span><span class="p">.</span><span class="nx">networkOnly</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">origin</span><span class="o">:</span> <span class="sr">/netease\.com/</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>缓存 Google fonts 和 Google Analytics:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">    <span class="o">//</span> <span class="n">Cache</span> <span class="n">all</span> <span class="k">static</span> <span class="n">vendor</span> <span class="n">assets</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">fonts</span> <span class="n">whose</span> <span class="n">version</span> <span class="n">is</span> <span class="n">bind</span> <span class="n">to</span> <span class="n">the</span> <span class="n">according</span> <span class="n">url</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">toolbox</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/(.*)&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolbox</span><span class="o">.</span><span class="n">cacheFirst</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">origin</span><span class="p">:</span> <span class="o">/</span><span class="p">(</span><span class="n">fonts</span>\<span class="o">.</span><span class="n">gstatic</span>\<span class="o">.</span><span class="n">com</span><span class="o">|</span><span class="n">www</span>\<span class="o">.</span><span class="n">google</span><span class="o">-</span><span class="n">analytics</span>\<span class="o">.</span><span class="n">com</span><span class="p">)</span><span class="o">/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cache</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">name</span><span class="p">:</span> <span class="n">staticVendorCacheName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">maxEntries</span><span class="p">:</span> <span class="n">maxEntries</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="激活-service-worker">激活 Service Worker</h3>
+<p>只需通过 script 标签将下面的 JavaScript 代码引入到 <code>defalut.hbs</code> 即可：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="k">var</span> <span class="n">serviceWorkerUri</span> <span class="o">=</span> <span class="s1">&#39;/serviceworker-v1.js&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span> <span class="ow">in</span> <span class="n">navigator</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">navigator</span><span class="o">.</span><span class="n">serviceWorker</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">serviceWorkerUri</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="o">//</span> <span class="n">Registration</span> <span class="n">was</span> <span class="n">successful</span><span class="o">.</span> <span class="n">Now</span><span class="p">,</span> <span class="n">check</span> <span class="n">to</span> <span class="n">see</span> <span class="n">whether</span> <span class="n">the</span> <span class="n">service</span> <span class="n">worker</span> <span class="n">is</span> <span class="n">controlling</span> <span class="n">the</span> <span class="n">page</span><span class="o">.</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">navigator</span><span class="o">.</span><span class="n">serviceWorker</span><span class="o">.</span><span class="n">controller</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Assets cached by the controlling service worker.&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Please reload this page to allow the service worker to handle network operations.&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span><span class="o">.</span><span class="n">catch</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;ERROR: &#39;</span> <span class="o">+</span> <span class="n">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">//</span> <span class="n">The</span> <span class="n">current</span> <span class="n">browser</span> <span class="n">doesn</span><span class="s1">&#39;t support service workers.</span>
+</span></span><span class="line"><span class="cl">    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Service workers are not supported in the current browser.&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以打开开发者工具查看 Service Worker 的运行状况，在 Application 一栏中有 Service Worker 的选项卡。如果出现错误可以通过它进行调试。</p>
+<h3 id="添加到主屏幕">添加到主屏幕</h3>
+<p>Progressive Web Apps 的官方文档指出，开发者需要提供一个 <code>manifest.json</code> 文件，这里我放在了网站根目录，它包含以下内容：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;short_name&#34;</span><span class="p">:</span> <span class="s2">&#34;Pavel&#39;s Blog&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Pavel&#39;s Blog&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;icons&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;src&#34;</span><span class="p">:</span> <span class="s2">&#34;assets/images/android-icon-144x144.png&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;sizes&#34;</span><span class="p">:</span> <span class="s2">&#34;144x144&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;image/png&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;density&#34;</span><span class="p">:</span> <span class="s2">&#34;3.0&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;start_url&#34;</span><span class="p">:</span> <span class="s2">&#34;/&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;display&#34;</span><span class="p">:</span> <span class="s2">&#34;standalone&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;orientation&#34;</span><span class="p">:</span> <span class="s2">&#34;portrait&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;background_color&#34;</span><span class="p">:</span> <span class="s2">&#34;#6595b8&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 <code>default.hbs</code> 中添加以下代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;link rel=&#34;manifest&#34; href=&#34;/manifest.json&#34;&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>下面在 Android Chrome 中打开你的博客，点右上角按钮——&gt;添加到主屏幕，就可以看到类似原生 App 的效果了。</p>
+<p>有任何问题可以在下方评论讨论。</p>
+<h3 id="参考资料">参考资料</h3>
+<p><a href="https://codeseo.io/node-ghost-and-progressive-web-apps-pwa/">Node, Ghost, and Progressive Web Apps (PWA)</a></p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content"></span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2017-09-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/pwa/">PWA</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/centos-6-8-install-nginx-stable-and-php7/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">日常折腾环境😂Nginx &#43; PHP 7.1.3</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/php-session-%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0/">
+            <span class="next-text nav-default">PHP session 获取不到之前设置值的问题</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="http://localhost:1313/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2024<span class="heart"><i class="iconfont icon-heart"></i></span><span></span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

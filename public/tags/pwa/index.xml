@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PWA on Pavel - Some words</title>
+    <link>http://localhost:1313/tags/pwa/</link>
+    <description>Recent content in PWA on Pavel - Some words</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 30 Sep 2017 01:13:02 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/pwa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>让你的Ghost博客支持Progressive Web Apps (PWA)</title>
+      <link>http://localhost:1313/node-express-ghost-progressive-web-apps-pwa/</link>
+      <pubDate>Sat, 30 Sep 2017 01:13:02 +0800</pubDate>
+      <guid>http://localhost:1313/node-express-ghost-progressive-web-apps-pwa/</guid>
+      <description>&lt;h3 id=&#34;ghost-博客支持-progressive-web-apps-pwa&#34;&gt;Ghost 博客支持 Progressive Web Apps （PWA）&lt;/h3&gt;&#xA;&lt;p&gt;一直对 Google 的 Progressive Web Apps （以下简称 PWA） 有点兴趣，所以拿我的博客做实验，让 Ghost 博客支持 PWA。&lt;/p&gt;&#xA;&lt;p&gt;PS：如果你的博客还不支持 https 的话，那么也就不支持 Service Worker，也就是说实现不了 Progressive Web Apps。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

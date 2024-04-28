@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Pavel - Some words</title>
+    <link>http://localhost:1313/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Pavel - Some words</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 21 Jan 2018 00:01:13 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>单向链表环问题</title>
+      <link>http://localhost:1313/linked-list-cycle/</link>
+      <pubDate>Sun, 21 Jan 2018 00:01:13 +0800</pubDate>
+      <guid>http://localhost:1313/linked-list-cycle/</guid>
+      <description>判断是否存在环 定义两个指针 p1，p2，从head节点开始遍历，每次循环p1向前移一位，p2向前移两位，若链表存在环则p1，p2必然有相等的时</description>
+    </item>
+    <item>
+      <title>【转载】布隆过滤器的原理和实现</title>
+      <link>http://localhost:1313/bu-long-guo-lv-qi-yuan-li-shi-xian/</link>
+      <pubDate>Fri, 22 Dec 2017 22:16:43 +0800</pubDate>
+      <guid>http://localhost:1313/bu-long-guo-lv-qi-yuan-li-shi-xian/</guid>
+      <description>&lt;h3 id=&#34;什么情况下需要布隆过滤器&#34;&gt;什么情况下需要布隆过滤器？&lt;/h3&gt;&#xA;&lt;p&gt;先来看几个比较常见的例子&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;字处理软件中，需要检查一个英语单词是否拼写正确&lt;/li&gt;&#xA;&lt;li&gt;在 FBI，一个嫌疑人的名字是否已经在嫌疑名单上&lt;/li&gt;&#xA;&lt;li&gt;在网络爬虫里，一个网址是否被访问过&lt;/li&gt;&#xA;&lt;li&gt;yahoo, gmail等邮箱垃圾邮件过滤功能&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>【转载】海量数据处理之「分而治之」</title>
+      <link>http://localhost:1313/hai-liang-shu-ju-chu-li-fen-er-zhi-zhi/</link>
+      <pubDate>Sat, 16 Dec 2017 22:16:43 +0800</pubDate>
+      <guid>http://localhost:1313/hai-liang-shu-ju-chu-li-fen-er-zhi-zhi/</guid>
+      <description>&lt;h3 id=&#34;方法介绍&#34;&gt;方法介绍&lt;/h3&gt;&#xA;&lt;p&gt;对于海量数据而言，由于无法一次性装进内存处理，导致我们不得不把海量的数据通过hash映射分割成相应的小块数据，然后再针对各个小块数据通过hash_map进行统计或其它操作。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
